@@ -21,8 +21,8 @@ jobs:
         with:
           channel: 'stable'
           
-      - name: Accept Android Licenses
-        run: yes | flutter doctor --android-licenses
+      - name: Accept Android SDK Licenses
+        run: yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses
           
       - name: Set up Python
         uses: actions/setup-python@v5
