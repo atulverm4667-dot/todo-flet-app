@@ -1,7 +1,7 @@
 name: Build Android APK
 
 on:
-  workflow_dispatch: # Isse aap button dabakar build start kar payenge
+  workflow_dispatch:
 
 jobs:
   build:
@@ -14,6 +14,12 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+          
+      # NAYA STEP: Server par Flutter install karne ke liye
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
           
       - name: Install dependencies
         run: pip install -r requirements.txt
