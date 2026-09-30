@@ -29,10 +29,10 @@ jobs:
         with:
           python-version: '3.12'
           
-      - name: Install dependencies
-        run: pip install -r requirements.txt
+      # YAHAN UPDATE KIYA HAI: Server par directly flet install kar rahe hain
+      - name: Install Flet on Server
+        run: pip install flet
         
-      # YAHAN UPDATE KIYA HAI: 'yes |' lagaya hai taki koi prompt na roke
       - name: Build APK with Flet
         run: yes | flet build apk
         
