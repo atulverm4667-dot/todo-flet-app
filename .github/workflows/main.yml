@@ -16,11 +16,11 @@ jobs:
           distribution: 'zulu'
           java-version: '17'
           
-      # YAHAN UPDATE KIYA HAI: Exact compatible Flutter version diya hai
+      # VERSION BUMP: Flutter 3.22.2 (Provides Dart 3.4+)
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.19.6'
+          flutter-version: '3.22.2'
           
       - name: Accept Android SDK Licenses
         run: yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses
