@@ -10,26 +10,30 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - name: Set up Java
+        uses: actions/setup-java@v4
         with:
-          python-version: '3.12'
+          distribution: 'zulu'
+          java-version: '17'
           
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
           
-      # NAYA STEP: Android licenses automatically accept karne ke liye
       - name: Accept Android Licenses
         run: yes | flutter doctor --android-licenses
+          
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
           
       - name: Install dependencies
         run: pip install -r requirements.txt
         
-      # Flet ko batana ki hamari file ka naam 'demo.py' hai
       - name: Build APK with Flet
-        run: flet build apk --module-name demo
+        run: flet build apk
         
       - name: Upload APK File
         uses: actions/upload-artifact@v4
