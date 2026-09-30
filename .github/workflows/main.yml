@@ -16,11 +16,10 @@ jobs:
           distribution: 'zulu'
           java-version: '17'
           
-      # VERSION BUMP: Flutter 3.22.2 (Provides Dart 3.4+)
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.22.2'
+          channel: 'stable'
           
       - name: Accept Android SDK Licenses
         run: yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses
