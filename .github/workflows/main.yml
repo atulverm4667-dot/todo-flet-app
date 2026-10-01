@@ -16,19 +16,13 @@ jobs:
           distribution: 'zulu'
           java-version: '17'
           
-      # 1. Exact wahi version jo Flet mangta hai (bina iske Flet aage nahi badhega)
-      - name: Set up Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          flutter-version: '3.24.3'
-          channel: 'stable'
-          
-      # 2. Android aur Linux ki zaroori files jo 'flutter doctor' ko pass karti hain
-      - name: Setup System Requirements
+      - name: Install Linux Dependencies
         run: |
-          yes | flutter doctor --android-licenses
           sudo apt-get update
           sudo apt-get install -y libgtk-3-dev mesa-utils
+          
+      - name: Accept Android SDK Licenses
+        run: yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses
           
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -40,9 +34,10 @@ jobs:
           pip install flet
           pip install -r requirements.txt
         
-      # 3. Koyi 'yes' ya 'echo' nahi, seedha plain build command
       - name: Build APK with Flet
-        run: flet build apk
+        run: |
+          set +o pipefail
+          yes | flet build apk
         
       - name: Upload APK File
         uses: actions/upload-artifact@v4
