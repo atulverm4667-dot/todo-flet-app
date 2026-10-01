@@ -16,14 +16,8 @@ jobs:
           distribution: 'zulu'
           java-version: '17'
           
-      # PROPER VERSION FIX: Flet 1.0.3 ke liye exact Flutter 3.24.3 lock kar diya
-      - name: Set up Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          flutter-version: '3.24.3'
-          
-      - name: Accept Flutter Android Licenses
-        run: yes | flutter doctor --android-licenses
+      - name: Accept Android SDK Licenses
+        run: yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses
           
       - name: Install Linux Dependencies
         run: |
@@ -40,8 +34,9 @@ jobs:
           pip install flet
           pip install -r requirements.txt
         
+      # MAGIC FIX: Ek single 'y' bheja hai jisse Flet apna private Flutter khud install karega bina error ke
       - name: Build APK with Flet
-        run: (yes || true) | flet build apk
+        run: echo "y" | flet build apk
         
       - name: Upload APK File
         uses: actions/upload-artifact@v4
