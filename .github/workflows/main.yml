@@ -16,10 +16,11 @@ jobs:
           distribution: 'zulu'
           java-version: '17'
           
-      # YAHAN SE FLUTTER ACTION HATA DIYA HAI - Flet khud manage karega
-          
-      - name: Accept Android SDK Licenses
-        run: yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses
+      # YAHAN UPDATE KIYA HAI: Flutter doctor ko 100% pass karne ke liye Linux files
+      - name: Install Linux Dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libgtk-3-dev mesa-utils
           
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -31,11 +32,8 @@ jobs:
           pip install flet
           pip install -r requirements.txt
         
-      # MAGIC FIX: 'set +o pipefail' GitHub ko crash hone se rokega jab hum auto-answer "yes" bhejenge
       - name: Build APK with Flet
-        run: |
-          set +o pipefail
-          yes | flet build apk
+        run: (yes || true) | flet build apk
         
       - name: Upload APK File
         uses: actions/upload-artifact@v4
