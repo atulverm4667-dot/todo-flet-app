@@ -16,11 +16,7 @@ jobs:
           distribution: 'zulu'
           java-version: '17'
           
-      - name: Set up Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          flutter-version: '3.24.3'
-          channel: 'stable'
+      # YAHAN SE FLUTTER ACTION HATA DIYA HAI - Flet khud manage karega
           
       - name: Accept Android SDK Licenses
         run: yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses
@@ -35,9 +31,11 @@ jobs:
           pip install flet
           pip install -r requirements.txt
         
-      # YAHAN UPDATE KIYA HAI: 'yes |' hata diya hai taaki Broken Pipe error na aaye
+      # MAGIC FIX: 'set +o pipefail' GitHub ko crash hone se rokega jab hum auto-answer "yes" bhejenge
       - name: Build APK with Flet
-        run: flet build apk
+        run: |
+          set +o pipefail
+          yes | flet build apk
         
       - name: Upload APK File
         uses: actions/upload-artifact@v4
