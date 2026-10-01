@@ -26,4 +26,6 @@ def main(page: ft.Page):
     )
 
 # NORMAL NATIVE MODE (Bina Server ke)
-ft.app(target=main)
+ft.run(main)
+# ya fir
+flet.run(main)
